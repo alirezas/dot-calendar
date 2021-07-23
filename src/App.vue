@@ -11,7 +11,7 @@
 
 <script setup>
 import Month from './components/Month.vue'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import jalaliday from 'jalaliday'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
