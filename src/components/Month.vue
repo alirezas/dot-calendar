@@ -1,8 +1,8 @@
 <template>
   <section>
-    <h2 class="font-black text-center text-gray-800">{{ month.monthName }}</h2>
+    <h2 class="font-black text-center text-gray-800 dark:text-gray-200">{{ month.monthName }}</h2>
     <div>
-      <div class="grid grid-cols-7 gap-3 my-4 text-xs font-bold text-gray-400">
+      <div class="grid grid-cols-7 gap-3 my-4 text-xs font-bold text-center text-gray-400 dark:text-gray-600">
         <span>ش</span>
         <span>ی</span>
         <span>د</span>
@@ -11,12 +11,12 @@
         <span>پ</span>
         <span>ج</span>
       </div>
-      <div class="grid grid-cols-7 gap-3">
+      <div class="grid grid-cols-7 gap-3 text-gray-800 dark:text-gray-300">
         <div v-for="day in month.startOfMonth"
              :key="day">
         </div>
         <div v-for="day in month.daysInMonth"
-             :key="day">
+             :key="day" class="text-center">
           <span>{{ $filters.toPersianNum(day) }}</span>
         </div>
       </div>

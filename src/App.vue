@@ -1,6 +1,6 @@
 <template>
   <header class="mb-8">
-    <h1 class="text-5xl font-black text-gray-900">{{ $filters.toPersianNum(year) }}</h1>
+    <h1 class="text-5xl font-black text-gray-900 dark:text-white">{{ $filters.toPersianNum(year) }}</h1>
   </header>
   <main class="grid grid-cols-3 gap-20">
     <Month v-for="month, index in cal"
