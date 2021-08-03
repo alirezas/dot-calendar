@@ -13,16 +13,16 @@ module.exports = {
       gray: colors.blueGray,
       indigo: colors.indigo,
       red: colors.rose,
-      yellow: colors.amber,
+      yellow: colors.amber
     },
     extend: {
       fontFamily: {
         sahel: ['Sahel', 'sans-serif']
       }
-    },
+    }
   },
   variants: {
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 }
