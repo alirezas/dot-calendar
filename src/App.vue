@@ -2,7 +2,7 @@
 <template>
   <header class="flex items-center mb-8">
     <h1 class="text-5xl font-black text-gray-900 dark:text-white">
-      {{ $filters.toPersianNum(year) }}
+      {{ $filters.toPersianNum(currentYear) }}
     </h1>
     <div class="mr-auto">
       <button class="flex items-center justify-center w-8 h-8 cursor-pointer"
@@ -86,15 +86,22 @@ dayjs.updateLocale('fa', {
   ]
 })
 
-const year = dayjs().format('YYYY')
+const currentMonth = dayjs().get('month')
+const currentDay = parseInt(dayjs().format('D'), 10)
+const currentYear = dayjs().format('YYYY')
+
 const cal = [...Array(12).keys()].reduce((acc, item) => {
+  const isCurrentMonth = item === currentMonth
+  const today = isCurrentMonth ? currentDay : null
   const month = dayjs().month(item)
   const monthName = month.format('MMMM')
   const daysInMonth = month.daysInMonth()
-  const startOfMonth = month.startOf('month').get('Day') + 1
+  const startOfMonth = month.startOf('month').get('Day') === 6 ? 0 : month.startOf('month').get('Day') + 1
 
   const monthData = {
     month,
+    isCurrentMonth,
+    today,
     monthName,
     daysInMonth,
     startOfMonth

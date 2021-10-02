@@ -5,21 +5,26 @@
     </h2>
     <div>
       <div class="grid grid-cols-7 gap-3 my-4 text-xs font-bold text-center text-gray-400 dark:text-gray-600">
-        <span>ش</span>
-        <span>ی</span>
-        <span>د</span>
-        <span>س</span>
-        <span>چ</span>
-        <span>پ</span>
-        <span>ج</span>
+        <span class="text-center w-14">ش</span>
+        <span class="text-center w-14">ی</span>
+        <span class="text-center w-14">د</span>
+        <span class="text-center w-14">س</span>
+        <span class="text-center w-14">چ</span>
+        <span class="text-center w-14">پ</span>
+        <span class="text-center w-14">ج</span>
       </div>
       <div class="grid grid-cols-7 gap-3 text-gray-800 dark:text-gray-300">
         <div v-for="day in month.startOfMonth"
-             :key="day" />
+             :key="day"
+             class="flex" />
         <div v-for="day in month.daysInMonth"
              :key="day"
-             class="text-center">
-          <span>{{ $filters.toPersianNum(day) }}</span>
+             class="flex flex-col items-center justify-center pt-2 pb-3 text-center rounded w-14"
+             :class="{'dark:bg-gray-800 bg-gray-100' : month.isCurrentMonth && day === month.today}">
+          <span class="text-lg font-semibold">{{ $filters.toPersianNum(day) }}</span>
+          <!-- <span class="text-xs text-gray-500 dark:text-gray-400">{{ day }}</span> -->
+          <span v-if="month.isCurrentMonth && day === month.today"
+                class="w-1 h-1 bg-red-600 rounded-full mt-1.5" />
         </div>
       </div>
     </div>
