@@ -2,7 +2,7 @@
 <template>
   <header class="flex items-center mb-8">
     <h1 class="text-5xl font-black text-gray-900 dark:text-white">
-      {{ $filters.toPersianNum(currentYear) }}
+      {{ $filters.toPersianNum(currentDate.jalali.year) }}
     </h1>
     <div class="mr-auto">
       <button class="flex items-center justify-center w-8 h-8 cursor-pointer"
@@ -47,6 +47,7 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import localeData from 'dayjs/plugin/localeData'
 import updateLocale from 'dayjs/plugin/updateLocale'
+import toObject from 'dayjs/plugin/toObject'
 import Month from './components/Month.vue'
 import 'dayjs/locale/fa'
 
@@ -54,6 +55,7 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(localeData)
 dayjs.extend(updateLocale)
+dayjs.extend(toObject)
 dayjs.extend(jalaliday)
 dayjs.calendar('jalali')
 dayjs.tz.setDefault('Asia/Tehran')
@@ -86,25 +88,38 @@ dayjs.updateLocale('fa', {
   ]
 })
 
-const currentMonth = dayjs().get('month')
-const currentDay = parseInt(dayjs().format('D'), 10)
-const currentYear = dayjs().format('YYYY')
+const currentDate = {
+  jalali: {
+    original: dayjs(),
+    year: dayjs().format('YYYY'),
+    month: dayjs().get('month'),
+    day: parseInt(dayjs().format('D'), 10)
+  },
+  gregory: {
+    original: dayjs().calendar('gregory'),
+    year: dayjs().calendar('gregory').format('YYYY'),
+    month: dayjs().calendar('gregory').get('month'),
+    day: parseInt(dayjs().calendar('gregory').format('D'), 10)
+  }
+}
 
 const cal = [...Array(12).keys()].reduce((acc, item) => {
-  const isCurrentMonth = item === currentMonth
-  const today = isCurrentMonth ? currentDay : null
   const month = dayjs().month(item)
-  const monthName = month.format('MMMM')
+  const isCurrentMonth = item === currentDate.jalali.month
+  const today = isCurrentMonth ? currentDate.jalali.day : null
   const daysInMonth = month.daysInMonth()
-  const startOfMonth = month.startOf('month').get('Day') === 6 ? 0 : month.startOf('month').get('Day') + 1
+  const startOfMonth = dayjs(`${currentDate.jalali.year}-${month.format('M')}-1`, { jalali: true })
+  const endOfMonth = dayjs(`${currentDate.jalali.year}-${month.format('M')}-${daysInMonth}`, { jalali: true })
+  const startOfMonthDay = month.startOf('month').get('Day') === 6 ? 0 : month.startOf('month').get('Day') + 1
 
   const monthData = {
     month,
     isCurrentMonth,
     today,
-    monthName,
     daysInMonth,
-    startOfMonth
+    startOfMonthDay,
+    startOfMonth,
+    endOfMonth
   }
 
   return [...acc, monthData]
