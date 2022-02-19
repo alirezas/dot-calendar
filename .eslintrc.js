@@ -1,22 +1,19 @@
 module.exports = {
+  env: {
+    browser: true,
+    es2021: true
+  },
   extends: [
-    '@nuxtjs'
-    // 'plugin:nuxt/recommended',
-    // 'plugin:vue/vue3-recommended'
+    'plugin:vue/vue3-recommended',
+    'standard'
   ],
-  // add your custom rules here
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module'
+  },
+  plugins: [
+    'vue'
+  ],
   rules: {
-    'vue/no-multiple-template-root': 'off',
-    'vue/max-attributes-per-line': ['error', {
-      singleline: 1,
-      multiline: {
-        max: 1,
-        allowFirstLine: true
-      }
-    }],
-    'vue/html-closing-bracket-newline': ['error', {
-      singleline: 'never',
-      multiline: 'never'
-    }]
   }
 }

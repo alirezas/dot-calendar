@@ -1,13 +1,13 @@
 <template>
   <section>
     <div class="text-center">
-      <h2 class="font-black text-gray-800 dark:text-gray-200 mb-1.5">
+      <h2 class="font-black text-stone-800 dark:text-stone-200 mb-1.5">
         {{ monthName }}
       </h2>
-      <span class="text-xs text-gray-400 dark:text-gray-600">{{ gregoryMonths.join(' ~ ') }}, {{ gregoryYears.join(' ~ ') }}</span>
+      <span class="text-xs text-stone-400 dark:text-stone-600">{{ gregoryMonths.join(' ~ ') }}, {{ gregoryYears.join(' ~ ') }}</span>
     </div>
     <div>
-      <div class="grid grid-cols-7 gap-3 my-4 text-xs font-bold text-center text-gray-400 dark:text-gray-600">
+      <div class="grid grid-cols-7 gap-3 my-4 text-xs font-bold text-center text-stone-400 dark:text-stone-600">
         <span class="text-center w-14">ش</span>
         <span class="text-center w-14">ی</span>
         <span class="text-center w-14">د</span>
@@ -16,18 +16,18 @@
         <span class="text-center w-14">پ</span>
         <span class="text-center w-14">ج</span>
       </div>
-      <div class="grid grid-cols-7 gap-3 text-gray-800 dark:text-gray-300">
+      <div class="grid grid-cols-7 gap-3 text-stone-800 dark:text-stone-300">
         <div v-for="day in month.startOfMonthDay"
              :key="day"
              class="flex" />
         <div v-for="day in month.daysInMonth"
              :key="day"
              class="flex flex-col items-center justify-center pt-2 pb-3 text-center rounded w-14"
-             :class="{'dark:bg-gray-800 bg-gray-100' : isToday(day)}">
+             :class="{'dark:bg-stone-800 bg-stone-100' : isToday(day)}">
           <span class="text-lg font-semibold">{{ $filters.toPersianNum(day) }}</span>
-          <span class="text-xs text-gray-500 dark:text-gray-400">{{ gregoryDay(day) }}</span>
+          <span class="text-xs text-stone-500 dark:text-stone-400">{{ gregoryDay(day) }}</span>
           <span v-if="isToday(day)"
-                class="w-1 h-1 bg-red-600 rounded-full mt-1.5" />
+                class="w-1 h-1 bg-rose-600 rounded-full mt-1.5" />
         </div>
       </div>
     </div>
