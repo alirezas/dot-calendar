@@ -1,23 +1,28 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
   },
   extends: [
     'plugin:react/recommended',
     'standard-with-typescript',
-    'prettier'
+    'plugin:prettier/recommended',
+    'plugin:prettier/recommended',
   ],
-  overrides: [
-  ],
+  overrides: [],
   parserOptions: {
+    project: './tsconfig.json',
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'prettier'
-  ],
+  plugins: ['react', 'prettier'],
   rules: {
-  }
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/triple-slash-reference': 'off',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 }
