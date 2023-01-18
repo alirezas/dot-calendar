@@ -3,7 +3,7 @@ import 'dayjs/locale/fa'
 import timezone from 'dayjs/plugin/timezone'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import jalaliday from 'jalaliday'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import Calendar from './components/Calendar'
 
@@ -47,16 +47,38 @@ dayjs.updateLocale('fa', {
 
 const currentDate = dayjs()
 
+export const ThemePrefsContext = React.createContext<
+  { theme: string; setTheme: Function } | undefined
+>(undefined)
 export const DayJsContext = React.createContext({ currentDate, dayjs })
 
 function App(): JSX.Element {
+  const [theme, setTheme] = useState('dark')
+  const themePrefsValues = { theme, setTheme }
+
+  useEffect(() => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark')
+      setTheme('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+      setTheme('light')
+    }
+  }, [theme])
+
   return (
     <>
-      <DayJsContext.Provider value={{ currentDate, dayjs }}>
-        <div className="container mx-auto px-4">
-          <Calendar />
-        </div>
-      </DayJsContext.Provider>
+      <ThemePrefsContext.Provider value={themePrefsValues}>
+        <DayJsContext.Provider value={{ currentDate, dayjs }}>
+          <div className="container mx-auto px-4 my-24">
+            <Calendar />
+          </div>
+        </DayJsContext.Provider>
+      </ThemePrefsContext.Provider>
     </>
   )
 }

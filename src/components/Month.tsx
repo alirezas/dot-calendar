@@ -37,14 +37,14 @@ const Month = ({ month }: Props): JSX.Element => {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex flex-col items-center">
-        <span className="font-black text-slate-800 mb-1.5">
+        <span className="font-black text-zinc-800 mb-1.5 dark:text-zinc-50">
           {month.format('MMMM')}
         </span>
-        <span className="text-xs text-slate-500">
+        <span className="text-xs text-zinc-400 dark:text-zinc-500">
           {gregoryMonths.join(' ~ ')}
         </span>
       </div>
-      <div className="grid grid-cols-7 gap-3 text-xs font-semibold text-center text-slate-400">
+      <div className="grid grid-cols-7 gap-3 text-xs font-semibold text-center text-zinc-300 dark:text-zinc-500">
         <span>ش</span>
         <span>ی</span>
         <span>د</span>

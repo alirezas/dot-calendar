@@ -14,13 +14,15 @@ const Day = ({ date }: Props): JSX.Element => {
   return (
     <div
       className={`flex flex-col items-center py-3 ${
-        isCurrentDay ? 'bg-slate-100' : ''
+        isCurrentDay ? 'bg-zinc-100 dark:bg-zinc-800' : ''
       }`}
     >
-      <span className="text-slate-800 font-semibold">
+      <span className="text-zinc-800 font-semibold dark:text-zinc-50">
         {faNumber(date.format('D'))}
       </span>
-      <span className="text-xs text-slate-600">{georgyDate.format('D')}</span>
+      <span className="text-xs text-zinc-400 dark:text-zinc-500">
+        {georgyDate.format('D')}
+      </span>
     </div>
   )
 }
