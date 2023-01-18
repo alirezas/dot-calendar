@@ -3,7 +3,7 @@ import 'dayjs/locale/fa'
 import timezone from 'dayjs/plugin/timezone'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import jalaliday from 'jalaliday'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import './App.css'
 import Calendar from './components/Calendar'
 
@@ -47,38 +47,64 @@ dayjs.updateLocale('fa', {
 
 const currentDate = dayjs()
 
-export const ThemePrefsContext = React.createContext<
-  { theme: string; setTheme: Function } | undefined
->(undefined)
+type ThemeKind = 'light' | 'dark'
+interface ThemeState {
+  darkMode: boolean
+}
+interface DarkModeAction {
+  payload: ThemeKind
+}
+export const ThemeContext = React.createContext<{
+  state: ThemeState
+  dispatch: React.Dispatch<DarkModeAction>
+}>({
+  state: { darkMode: true },
+  dispatch: () => null,
+})
+const themeReducer = (state: ThemeState, action: DarkModeAction) => {
+  const { payload } = action
+  console.log(state, payload)
+
+  switch (payload) {
+    case 'light':
+      document.documentElement.classList.remove('dark')
+      return {
+        ...state,
+        darkMode: false,
+      }
+    case 'dark':
+      document.documentElement.classList.add('dark')
+      return {
+        ...state,
+        darkMode: true,
+      }
+    default:
+      document.documentElement.classList.add('dark')
+      return state
+  }
+}
 export const DayJsContext = React.createContext({ currentDate, dayjs })
 
 function App(): JSX.Element {
-  const [theme, setTheme] = useState('dark')
-  const themePrefsValues = { theme, setTheme }
-
-  useEffect(() => {
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      document.documentElement.classList.add('dark')
-      setTheme('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      setTheme('light')
-    }
-  }, [theme])
-
+  const [state, dispatch] = useReducer(themeReducer, { darkMode: true })
+  if (
+    localStorage.theme === 'dark' ||
+    (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
   return (
     <>
-      <ThemePrefsContext.Provider value={themePrefsValues}>
+      <ThemeContext.Provider value={{ state, dispatch }}>
         <DayJsContext.Provider value={{ currentDate, dayjs }}>
           <div className="container mx-auto px-4 my-24">
             <Calendar />
           </div>
         </DayJsContext.Provider>
-      </ThemePrefsContext.Provider>
+      </ThemeContext.Provider>
     </>
   )
 }

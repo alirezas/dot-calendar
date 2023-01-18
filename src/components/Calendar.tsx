@@ -1,12 +1,12 @@
 import dayjs from 'dayjs'
 import { useContext } from 'react'
-import { DayJsContext, ThemePrefsContext } from '../App'
+import { DayJsContext, ThemeContext } from '../App'
 import { faNumber } from '../utils/faNumber'
 import Month from './Month'
 
 const Calendar = (): JSX.Element => {
   const { dayjs, currentDate } = useContext(DayJsContext)
-  const { theme, setTheme } = useContext(ThemePrefsContext)
+  const theme = useContext(ThemeContext)
   const calendar = [...Array(12).keys()].reduce(
     (acc: dayjs.Dayjs[], el: number) => {
       return [...acc, dayjs().month(el)]
@@ -15,9 +15,9 @@ const Calendar = (): JSX.Element => {
   )
 
   const toggleTheme = (): void => {
-    const changedTheme = theme === 'dark' ? 'light' : 'dark'
-    localStorage.theme = changedTheme
-    setTheme(changedTheme)
+    const toggle = theme.state.darkMode ? 'light' : 'dark'
+    localStorage.theme = toggle
+    theme.dispatch({ payload: toggle })
   }
 
   return (
@@ -31,7 +31,7 @@ const Calendar = (): JSX.Element => {
             onClick={toggleTheme}
             className="w-6 h-6 hover:bg-zinc-100 flex items-center justify-center rounded text-zinc-600 dark:text-zinc-50 dark:hover:bg-zinc-800 transition duration-200"
           >
-            {theme === 'light' ? (
+            {!theme.state.darkMode ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
