@@ -12,7 +12,7 @@ export const faNumber = (latinDigit: string): string => {
       peDigitArr.push(
         String.fromCharCode(
           // eslint-disable-next-line
-            // @ts-ignore
+          // @ts-ignore
           enDigitArr[j] + (!!latinDigit && latinDigit === true ? 1584 : 1728)
         )
       )

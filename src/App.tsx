@@ -1,51 +1,5 @@
-import dayjs from 'dayjs'
-import 'dayjs/locale/fa'
-import timezone from 'dayjs/plugin/timezone'
-import updateLocale from 'dayjs/plugin/updateLocale'
-import jalaliday from 'jalaliday'
-import React, { useEffect, useReducer, useState } from 'react'
-import './App.css'
+import React, { useReducer } from 'react'
 import Calendar from './components/Calendar'
-
-dayjs.extend(timezone)
-dayjs.extend(updateLocale)
-dayjs.extend(jalaliday)
-
-// eslint-disable-next-line
-// @ts-ignore
-dayjs.calendar('jalali')
-
-dayjs.tz.setDefault('Asia/Tehran')
-dayjs.locale('fa')
-dayjs.updateLocale('fa', {
-  weekStart: 0,
-  weekdays: [
-    'شنبه',
-
-    'یکشنبه',
-    'دوشنبه',
-    'سه‌شنبه',
-    'چهارشنبه',
-    'پنج‌شنبه',
-    'جمعه',
-  ],
-  months: [
-    'فروردین',
-    'اردیبهشت',
-    'خرداد',
-    'تیر',
-    'مرداد',
-    'شهریور',
-    'مهر',
-    'آبان',
-    'آذر',
-    'دی',
-    'بهمن',
-    'اسفند',
-  ],
-})
-
-const currentDate = dayjs()
 
 type ThemeKind = 'light' | 'dark'
 interface ThemeState {
@@ -83,7 +37,6 @@ const themeReducer = (state: ThemeState, action: DarkModeAction) => {
       return state
   }
 }
-export const DayJsContext = React.createContext({ currentDate, dayjs })
 
 function App(): JSX.Element {
   const [state, dispatch] = useReducer(themeReducer, { darkMode: true })
@@ -99,11 +52,9 @@ function App(): JSX.Element {
   return (
     <>
       <ThemeContext.Provider value={{ state, dispatch }}>
-        <DayJsContext.Provider value={{ currentDate, dayjs }}>
-          <div className="container mx-auto px-4 my-24">
-            <Calendar />
-          </div>
-        </DayJsContext.Provider>
+        <div className="container mx-auto px-4 my-24">
+          <Calendar />
+        </div>
       </ThemeContext.Provider>
     </>
   )
