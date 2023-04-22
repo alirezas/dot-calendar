@@ -1,6 +1,6 @@
-import dayjs from 'dayjs'
 import { useContext } from 'react'
-import { DayJsContext, ThemeContext } from '../App'
+import { ThemeContext } from '../App'
+import { DayJsContext } from '../main'
 import { faNumber } from '../utils/faNumber'
 import Month from './Month'
 

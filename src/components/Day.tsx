@@ -1,6 +1,5 @@
-import { Dayjs } from 'dayjs'
 import { useContext } from 'react'
-import { DayJsContext } from '../App'
+import { DayJsContext } from '../main'
 import { faNumber } from '../utils/faNumber'
 
 interface Props {
