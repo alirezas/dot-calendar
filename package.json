@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tabler/icons-react": "^2.17.0",
+    "@zoomit/dayjs-jalali-plugin": "^0.0.7",
+    "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "jalaliday": "^2.3.0",
     "react": "^18.2.0",

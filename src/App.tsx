@@ -1,42 +1,9 @@
-import React, { useReducer } from 'react'
+import { useReducer } from 'react'
 import Calendar from './components/Calendar'
-
-type ThemeKind = 'light' | 'dark'
-interface ThemeState {
-  darkMode: boolean
-}
-interface DarkModeAction {
-  payload: ThemeKind
-}
-export const ThemeContext = React.createContext<{
-  state: ThemeState
-  dispatch: React.Dispatch<DarkModeAction>
-}>({
-  state: { darkMode: true },
-  dispatch: () => null,
-})
-const themeReducer = (state: ThemeState, action: DarkModeAction) => {
-  const { payload } = action
-  console.log(state, payload)
-
-  switch (payload) {
-    case 'light':
-      document.documentElement.classList.remove('dark')
-      return {
-        ...state,
-        darkMode: false,
-      }
-    case 'dark':
-      document.documentElement.classList.add('dark')
-      return {
-        ...state,
-        darkMode: true,
-      }
-    default:
-      document.documentElement.classList.add('dark')
-      return state
-  }
-}
+import Header from './components/Header'
+import dayJsInstance from './config/dayJs'
+import { DayJsContext } from './context/DayJsContext'
+import { ThemeContext, themeReducer } from './context/ThemeContext'
 
 function App(): JSX.Element {
   const [state, dispatch] = useReducer(themeReducer, { darkMode: true })
@@ -49,12 +16,16 @@ function App(): JSX.Element {
   } else {
     document.documentElement.classList.remove('dark')
   }
+
   return (
     <>
       <ThemeContext.Provider value={{ state, dispatch }}>
-        <div className="container mx-auto px-4 my-24">
-          <Calendar />
-        </div>
+        <DayJsContext.Provider value={{ dayjs: dayJsInstance }}>
+          <div className="container mx-auto px-4 my-24">
+            <Header />
+            <Calendar />
+          </div>
+        </DayJsContext.Provider>
       </ThemeContext.Provider>
     </>
   )

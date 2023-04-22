@@ -1,82 +1,65 @@
 import { type Dayjs } from 'dayjs'
-import { useContext } from 'react'
-import { DayJsContext } from '../main'
+import { useContext, type ReactElement } from 'react'
+import { type dayJsInstanceType } from '../config/dayJs'
+import { DayJsContext } from '../context/DayJsContext'
 import Day from './Day'
 
 interface Props {
   month: Dayjs
 }
 
-const Month = ({ month }: Props): JSX.Element => {
-  const { currentDate, dayjs } = useContext(DayJsContext)
-  const daysInMonth = month.daysInMonth()
-  const startDay =
-    month.startOf('month').get('day') === 6
-      ? 0
-      : month.startOf('month').get('day') + 1
-  const startOfMonth = dayjs(
-    `${currentDate.format('YYYY')}-${month.format('M')}-1`,
-    {
-      // eslint-disable-next-line
-      // @ts-ignore
-      jalali: true,
-    }
+const Month = ({ month }: Props): ReactElement => {
+  const dayjs = useContext(DayJsContext)?.dayjs as dayJsInstanceType
+  const startOfMonth = Array.from({ length: month.day() }, (_, i) => i + 1)
+  const days = Array.from({ length: dayjs().daysInMonth() }, (_, i) =>
+    month.date(i + 1)
   )
-  const endOfMonth = dayjs(
-    `${currentDate.format('YYYY')}-${month.format('M')}-${daysInMonth}`,
-    {
-      // eslint-disable-next-line
-      // @ts-ignore
-      jalali: true,
-    }
-  )
-  const gregoryMonths = [
-    startOfMonth.calendar('gregory').locale('en').format('MMMM'),
-    endOfMonth.calendar('gregory').locale('en').format('MMMM'),
-  ]
+
   return (
-    <section className="flex flex-col gap-6">
-      <div className="flex flex-col items-center">
-        <span className="font-black text-zinc-800 mb-1.5 dark:text-zinc-50">
+    <div className="w-full">
+      <div className="text-center mb-4">
+        <h2 className="font-bold text-slate-700 dark:text-slate-300 text-lg">
           {month.format('MMMM')}
-        </span>
-        <span className="text-xs text-zinc-400 dark:text-zinc-500">
-          {gregoryMonths.join(' ~ ')}
-        </span>
-      </div>
-      <div className="grid grid-cols-7 gap-3 text-xs font-semibold text-center text-zinc-300 dark:text-zinc-500">
-        <span>ش</span>
-        <span>ی</span>
-        <span>د</span>
-        <span>س</span>
-        <span>چ</span>
-        <span>پ</span>
-        <span>ج</span>
+        </h2>
+        <p></p>
       </div>
       <div>
-        <div className="grid grid-cols-7 gap-3">
-          {[...Array(startDay).keys()].map((day, idx) => (
-            <span key={idx} />
+        <div className="grid grid-cols-7 gap-3 font-semibold text-sm text-slate-500 dark:text-slate-700 mb-4">
+          <span className="flex w-8 h-8 justify-center items-center leading-none">
+            ش
+          </span>
+          <span className="flex w-8 h-8 justify-center items-center leading-none">
+            ی
+          </span>
+          <span className="flex w-8 h-8 justify-center items-center leading-none">
+            د
+          </span>
+          <span className="flex w-8 h-8 justify-center items-center leading-none">
+            س
+          </span>
+          <span className="flex w-8 h-8 justify-center items-center leading-none">
+            چ
+          </span>
+          <span className="flex w-8 h-8 justify-center items-center leading-none">
+            پ
+          </span>
+          <span className="flex w-8 h-8 justify-center items-center leading-none">
+            ج
+          </span>
+        </div>
+        <div className="grid grid-cols-7 gap-3 text-slate-700 dark:text-slate-400">
+          {startOfMonth.map((day, idx) => (
+            <div
+              key={idx}
+              className="flex items-center justify-center leading-none h-8 w-8"
+            ></div>
           ))}
-          {[...Array(daysInMonth).keys()].map((el, idx) => {
-            const day = ++idx
-            return (
-              <Day
-                key={idx}
-                date={dayjs(
-                  `${currentDate.format('YYYY')}-${month.format('M')}-${day}`,
-                  {
-                    // eslint-disable-next-line
-                    // @ts-ignore
-                    jalali: true,
-                  }
-                )}
-              />
-            )
-          })}
+          {days.map((day, idx) => (
+            <Day key={idx} day={day} />
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
