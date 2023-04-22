@@ -12,15 +12,13 @@ const Calendar = (): ReactElement => {
   const months = duration.months()
 
   return (
-    <>
-      <div className="grid grid-cols-3 text-center gap-16">
-        {Array(months)
-          .fill(null)
-          .map((month, idx) => (
-            <Month key={idx} month={dayjs().month(idx)} />
-          ))}
-      </div>
-    </>
+    <div className="md:grid-cols-3 md:grid whitespace-nowrap md:whitespace-normal snap-mandatory snap-x md:w-auto relative flex w-full gap-16 overflow-x-auto text-center">
+      {Array(months)
+        .fill(null)
+        .map((month, idx) => (
+          <Month key={idx} month={dayjs().month(idx)} />
+        ))}
+    </div>
   )
 }
 

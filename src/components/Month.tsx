@@ -29,7 +29,7 @@ const Month = ({ month }: Props): ReactElement => {
       : gregoryStartMonth
 
   return (
-    <div className="w-full">
+    <div className="md:w-full snap-center shrink-0 md:shrink">
       <div className="mb-4 text-center">
         <h2 className="text-slate-700 dark:text-slate-300 text-lg font-bold">
           {month.format('MMMM')}

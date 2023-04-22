@@ -21,7 +21,7 @@ function App(): JSX.Element {
     <>
       <ThemeContext.Provider value={{ state, dispatch }}>
         <DayJsContext.Provider value={{ dayjs: dayJsInstance }}>
-          <div className="container mx-auto px-4 my-24">
+          <div className="md:my-24 container px-4 mx-auto my-12">
             <Header />
             <Calendar />
           </div>

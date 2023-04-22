@@ -19,18 +19,18 @@ const Header = (): ReactElement => {
 
   return (
     <div className="flex items-center mb-20">
-      <h1 className="dark:text-white font-extrabold text-5xl leading-none">
+      <h1 className="dark:text-white md:text-5xl text-3xl font-extrabold leading-none">
         {faNumber(today.format('YYYY'))}
       </h1>
       <div className="mr-auto">
         <button
           onClick={toggleTheme}
-          className="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-white rounded-full cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900"
+          className="text-slate-600 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-900 flex items-center justify-center w-8 h-8 rounded-full cursor-pointer"
         >
           {!theme.state.darkMode ? (
-            <IconSunHigh className="h-4 w-4" />
+            <IconSunHigh className="w-4 h-4" />
           ) : (
-            <IconMoon className="h-4 w-4" />
+            <IconMoon className="w-4 h-4" />
           )}
         </button>
       </div>
