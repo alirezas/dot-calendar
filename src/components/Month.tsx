@@ -14,44 +14,59 @@ const Month = ({ month }: Props): ReactElement => {
   const days = Array.from({ length: dayjs().daysInMonth() }, (_, i) =>
     month.date(i + 1)
   )
+  const gregoryStartMonth = days[0]
+    .calendar('gregory')
+    .locale('en')
+    .format('MMMM')
+  const gregoryEndMonth = days
+    .slice(-1)[0]
+    .calendar('gregory')
+    .locale('en')
+    .format('MMMM')
+  const gregoryMonth =
+    gregoryStartMonth !== gregoryEndMonth
+      ? `${gregoryStartMonth} ~ ${gregoryEndMonth}`
+      : gregoryStartMonth
 
   return (
     <div className="w-full">
-      <div className="text-center mb-4">
-        <h2 className="font-bold text-slate-700 dark:text-slate-300 text-lg">
+      <div className="mb-4 text-center">
+        <h2 className="text-slate-700 dark:text-slate-300 text-lg font-bold">
           {month.format('MMMM')}
         </h2>
-        <p></p>
+        <p className="text-slate-400 dark:text-slate-700 mt-1 text-xs">
+          {gregoryMonth}
+        </p>
       </div>
       <div>
-        <div className="grid grid-cols-7 gap-3 font-semibold text-sm text-slate-500 dark:text-slate-700 mb-4">
-          <span className="flex w-8 h-8 justify-center items-center leading-none">
+        <div className="text-slate-500 dark:text-slate-700 grid grid-cols-7 gap-3 mb-4 text-sm font-semibold">
+          <span className="flex items-center justify-center w-10 h-10 leading-none">
             ش
           </span>
-          <span className="flex w-8 h-8 justify-center items-center leading-none">
+          <span className="flex items-center justify-center w-10 h-10 leading-none">
             ی
           </span>
-          <span className="flex w-8 h-8 justify-center items-center leading-none">
+          <span className="flex items-center justify-center w-10 h-10 leading-none">
             د
           </span>
-          <span className="flex w-8 h-8 justify-center items-center leading-none">
+          <span className="flex items-center justify-center w-10 h-10 leading-none">
             س
           </span>
-          <span className="flex w-8 h-8 justify-center items-center leading-none">
+          <span className="flex items-center justify-center w-10 h-10 leading-none">
             چ
           </span>
-          <span className="flex w-8 h-8 justify-center items-center leading-none">
+          <span className="flex items-center justify-center w-10 h-10 leading-none">
             پ
           </span>
-          <span className="flex w-8 h-8 justify-center items-center leading-none">
+          <span className="flex items-center justify-center w-10 h-10 leading-none">
             ج
           </span>
         </div>
-        <div className="grid grid-cols-7 gap-3 text-slate-700 dark:text-slate-400">
+        <div className="text-slate-700 dark:text-slate-400 grid grid-cols-7 gap-3">
           {startOfMonth.map((day, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-center leading-none h-8 w-8"
+              className="flex items-center justify-center w-8 h-8 leading-none"
             ></div>
           ))}
           {days.map((day, idx) => (
