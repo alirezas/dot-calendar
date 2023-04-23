@@ -4,10 +4,24 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    https: {
+      key: './.cert/key.pem',
+      cert: './.cert/cert.pem',
+    },
+  },
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      mode: 'development',
+      base: '/',
+      //   includeAssets: ['favicon.svg'],
+      devOptions: {
+        enabled: true,
+        type: 'module',
+        navigateFallback: 'index.html',
+      },
       manifest: {
         name: 'Dot Calendar',
         short_name: 'Dot Calendar',
@@ -37,9 +51,6 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
-      },
-      devOptions: {
-        enabled: true,
       },
     }),
   ],

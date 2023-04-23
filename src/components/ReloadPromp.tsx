@@ -1,18 +1,8 @@
 import { type ReactElement } from 'react'
-import { pwaInfo } from 'virtual:pwa-info'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
-// eslint-disable-next-line no-console
-console.log(pwaInfo)
-
 const ReloadPrompt = (): ReactElement => {
-  // replaced dynamically
-  const buildDate = '__DATE__'
-  // replaced dyanmicaly
-  const reloadSW = '__RELOAD_SW__'
-
   const {
-    offlineReady: [offlineReady, setOfflineReady],
     needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
   } = useRegisterSW({
@@ -29,7 +19,7 @@ const ReloadPrompt = (): ReactElement => {
           }, 20000 /* 20s for testing purposes */)
       } else {
         // eslint-disable-next-line prefer-template,no-console
-        console.log('SW Registered: ' + r)
+        console.log(`SW Registered: ${r}`)
       }
     },
     onRegisterError(error) {
@@ -38,38 +28,23 @@ const ReloadPrompt = (): ReactElement => {
     },
   })
 
-  const close = (): void => {
-    setOfflineReady(false)
-    setNeedRefresh(false)
-  }
-
   return (
-    <div className="ReloadPrompt-container">
-      {(offlineReady || needRefresh) && (
-        <div className="ReloadPrompt-toast">
-          <div className="ReloadPrompt-message">
-            {offlineReady ? (
-              <span>App ready to work offline</span>
-            ) : (
-              <span>
-                New content available, click on reload button to update.
-              </span>
+    <div className="fixed bottom-0 z-50 w-full inset-x-0 mx-auto pb-[calc(env(safe-area-inset-bottom)+16px)]">
+      {needRefresh && (
+        <div className="bg-slate-800 text-slate-100 p-2 rounded mx-auto shadow-xl backdrop-blur-sm bg-opacity-90 max-w-sm">
+          <div className="flex items-center justify-between text-xs">
+            <div>نسخه جدید منتشر شده!</div>
+            {needRefresh && (
+              <button
+                className="bg-slate-600 rounded-sm py-2 px-3 inline-block"
+                onClick={() => updateServiceWorker(true)}
+              >
+                بارگذاری مجدد
+              </button>
             )}
           </div>
-          {needRefresh && (
-            <button
-              className="ReloadPrompt-toast-button"
-              onClick={() => updateServiceWorker(true)}
-            >
-              Reload
-            </button>
-          )}
-          <button className="ReloadPrompt-toast-button" onClick={() => close()}>
-            Close
-          </button>
         </div>
       )}
-      <div className="ReloadPrompt-date">{buildDate}</div>
     </div>
   )
 }

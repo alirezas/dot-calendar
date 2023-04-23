@@ -21,7 +21,6 @@ export const themeReducer = (
   action: DarkModeAction
 ): ThemeState => {
   const { payload } = action
-  console.log(state, payload)
 
   switch (payload) {
     case 'light':

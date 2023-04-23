@@ -18,9 +18,6 @@ function App(): JSX.Element {
     document.documentElement.classList.remove('dark')
   }
 
-  // replaced dyanmicaly
-  const date = '__DATE__'
-
   return (
     <>
       <ThemeContext.Provider value={{ state, dispatch }}>
