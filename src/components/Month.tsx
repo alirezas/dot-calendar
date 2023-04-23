@@ -1,7 +1,5 @@
 import { type Dayjs } from 'dayjs'
-import { useContext, type ReactElement } from 'react'
-import { type dayJsInstanceType } from '../config/dayJs'
-import { DayJsContext } from '../context/DayJsContext'
+import { type ReactElement } from 'react'
 import Day from './Day'
 
 interface Props {
@@ -9,9 +7,8 @@ interface Props {
 }
 
 const Month = ({ month }: Props): ReactElement => {
-  const dayjs = useContext(DayJsContext)?.dayjs as dayJsInstanceType
   const startOfMonth = Array.from({ length: month.day() }, (_, i) => i + 1)
-  const days = Array.from({ length: dayjs().daysInMonth() }, (_, i) =>
+  const days = Array.from({ length: month.daysInMonth() }, (_, i) =>
     month.date(i + 1)
   )
   const gregoryStartMonth = days[0]
