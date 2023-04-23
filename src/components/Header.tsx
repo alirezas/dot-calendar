@@ -1,12 +1,12 @@
 import { IconMoon, IconSunHigh } from '@tabler/icons-react'
 import { useContext, type ReactElement } from 'react'
 import { type dayJsInstanceType } from '../config/dayJs'
-import { DayJsContext } from '../context/DayJsContext'
+import { CalendarContext } from '../context/CalendarContext'
 import { ThemeContext } from '../context/ThemeContext'
 import { faNumber } from '../utils/faNumber'
 
 const Header = (): ReactElement => {
-  const dayjs = useContext(DayJsContext)?.dayjs as dayJsInstanceType
+  const dayjs = useContext(CalendarContext)?.dayjs as dayJsInstanceType
   const theme = useContext(ThemeContext)
 
   const toggleTheme = (): void => {

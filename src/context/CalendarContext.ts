@@ -1,10 +1,11 @@
 import { createContext } from 'react'
 import { type dayJsInstanceType } from '../config/dayJs'
 
-interface DayJsContextType {
+interface CalendarContextType {
   dayjs: dayJsInstanceType
+  holidays: object
 }
 
-export const DayJsContext = createContext<DayJsContextType | undefined>(
+export const CalendarContext = createContext<CalendarContextType | undefined>(
   undefined
 )

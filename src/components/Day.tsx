@@ -1,5 +1,6 @@
 import { type Dayjs } from 'dayjs'
-import { type ReactElement } from 'react'
+import { useContext, type ReactElement } from 'react'
+import { CalendarContext } from '../context/CalendarContext'
 import { faNumber } from '../utils/faNumber'
 
 interface Props {
@@ -7,12 +8,20 @@ interface Props {
 }
 
 const Day = ({ day }: Props): ReactElement => {
+  const { holidays } = useContext(CalendarContext)
+
+  const isHoliday = holidays.some(
+    (event) =>
+      event.day === +day.format('D') && event.month === +day.format('M')
+  )
   return (
     <div className="w-10">
       <div className="flex flex-col items-center justify-center w-10 h-10 leading-none">
         <time
           dateTime={day.format('YYYY-DD-mm')}
-          className={day.get('day') === 5 ? 'text-red-500' : ''}
+          className={
+            day.get('day') === 5 || isHoliday === true ? 'text-red-500' : ''
+          }
         >
           {faNumber(day.format('D'))}
         </time>
