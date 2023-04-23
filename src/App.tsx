@@ -8,16 +8,13 @@ import { ThemeContext, themeReducer } from './context/ThemeContext'
 import events from './data/events.json'
 
 const persianCalendar = events['Persian Calendar']
-const iranEvents = persianCalendar.filter((event) => event.type === 'Iran')
-const iranHolidays = iranEvents.filter((event) => event.holiday)
-
-export interface Event {
-  holiday: boolean
-  month: number
-  day: number
-  type: string
-  title: string
-}
+const hijriCalendar = events['Hijri Calendar']
+const iranPersianEvents = persianCalendar.filter(
+  (event) => event.type === 'Iran'
+)
+const iranPersianHolidays = iranPersianEvents.filter((event) => event.holiday)
+const iranHijriEvents = hijriCalendar.filter((event) => event.type === 'Iran')
+const iranHijriHolidays = iranHijriEvents.filter((event) => event.holiday)
 
 function App(): JSX.Element {
   const [state, dispatch] = useReducer(themeReducer, { darkMode: true })
@@ -35,7 +32,11 @@ function App(): JSX.Element {
     <>
       <ThemeContext.Provider value={{ state, dispatch }}>
         <CalendarContext.Provider
-          value={{ dayjs: dayJsInstance, holidays: iranHolidays }}
+          value={{
+            dayjs: dayJsInstance,
+            persianHolidays: iranPersianHolidays,
+            hijriHolidays: iranHijriHolidays,
+          }}
         >
           <div className="md:my-24 container px-4 mx-auto my-12">
             <ReloadPrompt />

@@ -13,6 +13,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.7
     version: 1.11.7
+  dayjs-calendar-hijri:
+    specifier: ^1.0.2
+    version: 1.0.2
   jalaliday:
     specifier: ^2.3.0
     version: 2.3.0
@@ -2299,6 +2302,10 @@ packages:
   /date-fns@2.29.3:
     resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
     engines: {node: '>=0.11'}
+    dev: false
+
+  /dayjs-calendar-hijri@1.0.2:
+    resolution: {integrity: sha512-Wb8I8z2zRx/EeexdYPSbBM9v8jLVQERWPYV4Kbcwjsc/7hdEz7tL4nx9Cn5q0jv02hvReeA4YEbeEizi+Ea38g==}
     dev: false
 
   /dayjs@1.11.7:

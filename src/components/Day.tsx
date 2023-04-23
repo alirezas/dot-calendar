@@ -1,7 +1,7 @@
 import { type Dayjs } from 'dayjs'
 import { useContext, type ReactElement } from 'react'
-import { type Event } from '../App'
 import { CalendarContext } from '../context/CalendarContext'
+import { type Event } from '../types/Event'
 import { faNumber } from '../utils/faNumber'
 
 interface Props {
@@ -9,20 +9,32 @@ interface Props {
 }
 
 const Day = ({ day }: Props): ReactElement => {
-  const holidays = useContext(CalendarContext)?.holidays as Event[]
+  const persianHolidays = useContext(CalendarContext)
+    ?.persianHolidays as Event[]
+  const hijriHolidays = useContext(CalendarContext)?.hijriHolidays as Event[]
+  const hijriDate = Intl.DateTimeFormat('en-IR-u-ca-islamic-civil', {
+    timeZone: 'Asia/Tehran',
+  }).formatToParts(day.toDate())
 
-  const isHoliday = holidays.some(
+  const isHoliday = persianHolidays.some(
     (event: Event) =>
       event.day === +day.format('D') && event.month === +day.format('M')
   )
+  //  ||
+  // hijriHolidays.some(
+  //   (event: Event) =>
+  //     event.day ===
+  //       +hijriDate.filter((part) => part.type === 'day')[0].value &&
+  //     event.month ===
+  //       +hijriDate.filter((part) => part.type === 'month')[0].value
+  // )
+
   return (
     <div className="w-10">
       <div className="flex flex-col items-center justify-center w-10 h-10 leading-none">
         <time
           dateTime={day.format('YYYY-DD-mm')}
-          className={
-            day.get('day') === 5 || isHoliday === true ? 'text-red-500' : ''
-          }
+          className={day.get('day') === 5 || isHoliday ? 'text-red-500' : ''}
         >
           {faNumber(day.format('D'))}
         </time>
