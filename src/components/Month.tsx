@@ -7,7 +7,10 @@ interface Props {
 }
 
 const Month = ({ month }: Props): ReactElement => {
-  const startOfMonth = Array.from({ length: month.day() }, (_, i) => i + 1)
+  const startOfMonth = Array.from(
+    { length: month.day() === 0 ? 6 : month.day() - 1 },
+    (_, i) => i + 1
+  )
   const days = Array.from({ length: month.daysInMonth() }, (_, i) =>
     month.date(i + 1)
   )
