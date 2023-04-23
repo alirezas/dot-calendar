@@ -1,5 +1,6 @@
 import { type Dayjs } from 'dayjs'
 import { useContext, type ReactElement } from 'react'
+import { type Event } from '../App'
 import { CalendarContext } from '../context/CalendarContext'
 import { faNumber } from '../utils/faNumber'
 
@@ -8,10 +9,10 @@ interface Props {
 }
 
 const Day = ({ day }: Props): ReactElement => {
-  const { holidays } = useContext(CalendarContext)
+  const holidays = useContext(CalendarContext)?.holidays as Event[]
 
   const isHoliday = holidays.some(
-    (event) =>
+    (event: Event) =>
       event.day === +day.format('D') && event.month === +day.format('M')
   )
   return (

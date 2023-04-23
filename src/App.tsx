@@ -11,6 +11,14 @@ const persianCalendar = events['Persian Calendar']
 const iranEvents = persianCalendar.filter((event) => event.type === 'Iran')
 const iranHolidays = iranEvents.filter((event) => event.holiday)
 
+export interface Event {
+  holiday: boolean
+  month: number
+  day: number
+  type: string
+  title: string
+}
+
 function App(): JSX.Element {
   const [state, dispatch] = useReducer(themeReducer, { darkMode: true })
   if (
