@@ -12,7 +12,7 @@ const Day = ({ day }: Props): ReactElement => {
       <div className="flex flex-col items-center justify-center w-10 h-10 leading-none">
         <time
           dateTime={day.format('YYYY-DD-mm')}
-          className={day.get('day') === 4 ? 'text-red-500' : ''}
+          className={day.get('day') === 5 ? 'text-red-500' : ''}
         >
           {faNumber(day.format('D'))}
         </time>
