@@ -11,16 +11,16 @@ interface Props {
 const Day = ({ day }: Props): ReactElement => {
   const persianHolidays = useContext(CalendarContext)
     ?.persianHolidays as Event[]
-  const hijriHolidays = useContext(CalendarContext)?.hijriHolidays as Event[]
-  const hijriDate = Intl.DateTimeFormat('en-IR-u-ca-islamic-civil', {
-    timeZone: 'Asia/Tehran',
-  }).formatToParts(day.toDate())
+  //   const hijriHolidays = useContext(CalendarContext)?.hijriHolidays as Event[]
+  //   const hijriDate = Intl.DateTimeFormat('en-IR-u-ca-islamic-civil', {
+  //     timeZone: 'Asia/Tehran',
+  //   }).formatToParts(day.toDate())
 
   const isHoliday = persianHolidays.some(
     (event: Event) =>
       event.day === +day.format('D') && event.month === +day.format('M')
   )
-  //  ||
+  // ||
   // hijriHolidays.some(
   //   (event: Event) =>
   //     event.day ===
